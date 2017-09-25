@@ -11,19 +11,11 @@ const Page = db.define('page', {
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        //validate: { isUrl: true },
-    
-        getterMethods: {
-            route(){
-                return '/wiki/' + this.urlTitle;
-            }
-        },
-        setterMethods: {
-            setUrlTitle(){
-                var title = this.getDataValue('title').split(' ');
-                this.setDataValue('urlTitle', title.join('_'));
-            }
-        }
+        //validate: { isUrl: true },    
+    },
+    route: {
+        type: Sequelize.VIRTUAL,
+        get: function(){ return '/wiki/' + this.urlTitle}
     },
     content: {
         type: Sequelize.TEXT,

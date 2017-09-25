@@ -16,9 +16,14 @@ router.route('/')
     });
 
     page.save()
-    //.then(res.redirect();
-    res.json(req.body);
-    //res.render('wikipage');
+    .then(function(savedPage){
+      console.log(savedPage.route);
+      res.redirect(savedPage.route);
+    })
+    .catch(function(error){
+      console.error(error);
+    }
+);
   });
   
   router.get('/add', function (req, res) {
@@ -26,12 +31,14 @@ router.route('/')
   });
   
   router.get("/:urlTitle", function (req, res){
-    var url = Page.findAll({
+    Page.findOne({
       where: {
         urlTitle: req.params.urlTitle
       }
     })
-    //res.json(url);
-    res.redirect(url);
+    .then(function(page){
+      //res.json(page);
+      res.render('wikipage', {page});
+    })
   });
 module.exports = router;
