@@ -12,7 +12,8 @@ router.route('/')
   .post(function (req, res) {
     var page = Page.build({
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
+      status: true
     });
 
     page.save()
