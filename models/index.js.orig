@@ -11,8 +11,12 @@ const Page = db.define('page', {
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        //validate: { isUrl: true },
-    
+        validate: { isUrl: true },
+<<<<<<< HEAD
+        set(){
+            const title = this.getDataValue('title');
+            this.setDataValue('urlTitle', val)
+=======
         getterMethods: {
             route(){
                 return '/wiki/' + this.urlTitle;
@@ -23,6 +27,7 @@ const Page = db.define('page', {
                 var title = this.getDataValue('title').split(' ');
                 this.setDataValue('urlTitle', title.join('_'));
             }
+>>>>>>> c5a655d18595e86d3fb80b71105b1060ed9d5918
         }
     },
     content: {
@@ -32,20 +37,7 @@ const Page = db.define('page', {
     status: {
         type: Sequelize.BOOLEAN
     }
-},
-    {
-        hooks: {
-            beforeValidate: (page) => {
-                if(page.title){
-                    var regex = /[!@#\$%\^\&*\)\(+=._', -:;"<>]/g;
-                    page.urlTitle =  page.title.replace(regex, "_");
-                } else {
-                    page.urlTitle = Math.random().toString(36).substring(2, 7);
-                }
-            }
-        }
-    }
-);
+});
 
 const User = db.define('user', {
     name: { type: Sequelize.STRING,
