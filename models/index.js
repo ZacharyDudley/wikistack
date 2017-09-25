@@ -11,23 +11,34 @@ const Page = db.define('page', {
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: { isUrl: true }
+        validate: { isUrl: true },
+        getterMethods: {
+            route(){
+                return '/wiki/' + this.urlTitle;
+            }
+        },
+        setterMethods: {
+            setUrlTitle(){
+                var title = this.getDataValue('title').split(' ');
+                this.setDataValue('urlTitle', title.join('_'));
+            }
+        }
     },
-    content: { 
-        type: Sequelize.TEXT, 
-        allowNull: false 
+    content: {
+        type: Sequelize.TEXT,
+        allowNull: false
     },
-    status: { 
-        type: Sequelize.BOOLEAN 
+    status: {
+        type: Sequelize.BOOLEAN
     }
 });
 
 const User = db.define('user', {
-    name: { type: Sequelize.STRING, 
-        allowNull: false 
+    name: { type: Sequelize.STRING,
+        allowNull: false
     },
-    email: { 
-        type: Sequelize.STRING, 
+    email: {
+        type: Sequelize.STRING,
         allowNull: false,
         validate: { isEmail: true }
     }
