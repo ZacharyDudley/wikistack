@@ -6,12 +6,16 @@ var db = new Sequelize('postgres://localhost:5432/wikistack', {
 const Page = db.define('page', {
     title: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
     },
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: { isUrl: true }
+        validate: { isUrl: true },
+        set(){
+            const title = this.getDataValue('title');
+            this.setDataValue('urlTitle', val)
+        }
     },
     content: { 
         type: Sequelize.TEXT, 
@@ -32,6 +36,7 @@ const User = db.define('user', {
         validate: { isEmail: true }
     }
 });
+
 
 module.exports = {
     db: db,
