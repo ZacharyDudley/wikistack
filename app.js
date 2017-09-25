@@ -17,12 +17,9 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// app.get('/', function(req, res){
-//     res.render('index', {});
-// });
 app.use('/', router);
 
-models.db.sync({})
+models.db.sync({force: true})
 .then(function(){
     app.listen(3000, function(){
        console.log('listening on port 3000');

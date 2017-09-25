@@ -11,7 +11,7 @@ const Page = db.define('page', {
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        //validate: { isUrl: true },    
+        //validate: { isUrl: true },
     },
     route: {
         type: Sequelize.VIRTUAL,
@@ -50,6 +50,7 @@ const User = db.define('user', {
     }
 });
 
+Page.belongsTo(User, {as: 'author'});
 
 module.exports = {
     db: db,

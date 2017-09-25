@@ -10,6 +10,19 @@ router.route('/')
     //res.render('wikipage');
   })
   .post(function (req, res) {
+    User.findOne({
+      where: {
+        name: req.body.author
+      }
+    }).then(function(foundUser){
+      if (!foundUser) {
+        User.build({
+          name: req.body.authorName,
+          email: req.body.authorEmail
+        });
+      }
+    })
+
     var page = Page.build({
       title: req.body.title,
       content: req.body.content,
@@ -26,11 +39,11 @@ router.route('/')
     }
 );
   });
-  
+
   router.get('/add', function (req, res) {
     res.render('addpage');
   });
-  
+
   router.get("/:urlTitle", function (req, res){
     Page.findOne({
       where: {
